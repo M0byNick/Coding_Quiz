@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--Meta Tag Setup-->
+    <!--Meta tag setup-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Nick's Coding Quiz</title>
 
-    <!--Stylesheet Linking-->
+    <!--Stylesheet linking-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/style.css">
 
@@ -18,22 +18,63 @@
 
 <body>
     <header>
+        <!--Accessing current highscore leaderboard-->
         <a id=highscores>
             Current Highscores
         </a>
+        <!--Time keeping-->
         <time>
             Time:
             <span id="time">
             </span>
         </time>
     </header>
-    <main>    
+    <main>
+        <!--Main title card-->    
         <div id=quiz-start class = "card">
             <h2 id=title>
                 Javascript Coding Quiz
             </h2>
+            <p>
+                Answer as many coding questions correctly before the time runs out!
+                <br><br>
+                Incorrect answers will lose you points and 10 seconds of your remaining time.
+            </p>
         </div>
 
+        <div id="quiz_questions" class ="card">
+            <div id="timer">Remaining Time: 
+                <div id="questions"></div>
+                <button id="option1" onclick="checkAnswer('1')">1.</button>
+                <button id="option2" onclick="checkAnswer('2')">2.</button>
+                <button id="option3" onclick="checkAnswer('3')">3.</button>
+                <button id="option4" onclick="checkAnswer('4')">4.</button>
+            </div>
+        </div>
+        <div id="correctness"></div>
+        
+        <div id="end_result">
+            <div id="final_score">
+                <input type="text" size = "36" placeholder="Enter your name for the high score leaderboard" name="name" id="name"/>
+                <button id="submit">Submit Your Score</button>
+            </div>
+            
+        </div>
+
+        <div id="high-score-card" class="card">
+            <div id="high-score-header">
+                <h2>User's name</h2>
+                <h2>Score</h2>
+            <div></div>
+            
+        </div>
+        <div id="high-score-name"></div>
+        <div id="highscore-score"></div>
+
+        <div id="endGameOptions">
+            <button id="mainMenu" onclick="goMenu()">Main Menu</button>
+            <button id="clearScores" onclick="clearScores()">Clear Highscore Leaderboard</button>
+        </div>
     </main>
 
     <!--Linking JS script-->
