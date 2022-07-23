@@ -12,7 +12,6 @@ function hideCards(){
 
 //Global variables
 var quizTimer = document.getElementById("timer");
-var questionsVar = document.getElementById("questions");
 var button1 = document.getElementById("option1");
 var button2 = document.getElementById("option2");
 var button3 = document.getElementById("option3");
@@ -21,6 +20,7 @@ var highscoreInputName = document.getElementById("name");
 
 
 const question_result = document.querySelector("#correctness");
+const resultText = document.querySelector("#resultText");
 const final_results = document.querySelector("#end-result");
 const final_score = document.querySelector("final_score");
 
@@ -70,6 +70,12 @@ var timerInterval;
 var score = 0;
 var correctSelection;
 
+function displayTime(){
+    timeDisplay.textContent = timeLeft;
+}
+
+
+
 document.querySelector("#start-button").addEventListener("click", startQuiz);
 
 //Selection of question and loop to iterate through array of questions and their options
@@ -114,4 +120,43 @@ function startQuiz(){
         }
     }, 1000);
     quiz_start.style.display = "block";
+    stopQuiz();
 }
+
+function correctOption(optionButton){
+    return optionButton.textContent === questions[currentQuestionIndex].answer;
+}
+
+function checkAnswer(eventObj){
+    let optionButton = eventObj.target;
+    question_result.style.display = "block";
+    if(optionIsCorrect(optionButton)){
+        resultText.textContent = "Nice. You got this question correct!";
+        setTimeout(hideResultText, 2000);
+    }
+    else{
+        resultText.textContent = "Sorry, you've answered this question incorrectly.";
+        setTimeout(hideResultText, 2000);
+        if(time <= 10 && time > 0){
+            display.textContent = "Hurry up!"
+        }
+    }
+    else{
+        if(time = 0){
+        displayTime();
+        stopQuiz();
+    }
+    }
+}
+
+document.querySelector("#quiz_options").addEventListener("click", checkAnswer);
+
+function stopQuiz(){
+    clearInterval(timerInterval)
+    hideCards();
+    end_result.removeAttribute("hidden");
+    displayFinalScore();
+}
+
+const submitButton = document.querySelector("submit");
+const inputEl = document.querySelector("name");
