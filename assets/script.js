@@ -37,6 +37,8 @@ const questions = [
     }
 ];
 
+//Global elements and variables
+
 const startScreenEl = document.getElementById("start-screen");
 const startButtonEl = document.getElementById("start-button");
 
@@ -58,6 +60,7 @@ let score;
 let timeRemaining;
 let timerHandle;
 
+//Timer countdown
 const settimeRemaining = (seconds) = {
     if (!timerEl){
         return;
@@ -68,6 +71,7 @@ const settimeRemaining = (seconds) = {
     }
 };
 
+//Begin countdown
 const startTimer = () => {
     timerHandle = setInterval(
         () => settimeRemaining(timeRemaining - 1),
@@ -75,8 +79,12 @@ const startTimer = () => {
     );
 };
 
+//Clear timer when finished
 const stopTimer = () => clearInterval(timerHandle);
 
+//Displays questions pulled from the questions array and checks if
+//the correct answer has been selected. The quiz then advances to
+//the next question in the array.
 const displayQuestion = (question) => {
     if (!questionTextEl || !answerListEl){
         return;
@@ -108,7 +116,8 @@ const advanceQuiz = () => {
         endQuiz();
     }
 };
-
+//Starts quiz and resets timer, question index (to begin with the first question),
+//and the screen element.
 const startQuiz = () => {
     if (!startScreenEl || !quizScreenEl || !endScreenEl) {
         return;
@@ -122,7 +131,7 @@ const startQuiz = () => {
     startTimer();
     quizScreenEl.hidden = false;
 };
-
+//Concludes the quiz and displays the final score
 const endQuiz = () = => {
     if (!startScreenEl || !quizScreenEl || !scoreSpanEl || !endScreenEl) {
         return;
@@ -132,7 +141,7 @@ const endQuiz = () = => {
     scoreSpanEl.textContent = score;
     endScreenEl.hidden = false;
 };
-
+//Shows the high score leaderboard
 const displayHighScores = () => {
         if (!highScoreListEl) {
             return;
@@ -144,9 +153,12 @@ const displayHighScores = () => {
         highScoreListEl?.appendChild(liEl);
     });
 };
-
+//Checks for when to begin the quiz
 startButtonEl?.addEventListener("click", startQuiz);
 
+//When the user submits a new high score then it pushes
+//the user info and their score to the element containing
+//the list of scores (limited to 10).
 scoreFormEl?.addEventListener("submit", (event) => {
     event.preventDefault();
     const formData = new FormData(scoreFormEl);
@@ -168,12 +180,12 @@ scoreFormEl?.addEventListener("submit", (event) => {
     displayHighScores();
     highScoreScreenEl.hidden = false;
 });
-
+//Clears all saved high scores from local storage
 clearHighScoresButtonEl?.addEventListener("click", () => {
     localStorage.removeItem(High_Scores_Key);
     location.reload();
 });
- 
+//Returns the user to the main menu
 mainMenuButtonEl?.addEventListener("click", () => {
     startScreenEl.hidden = false;
     quizScreenEl.hidden = true;
