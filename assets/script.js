@@ -35,31 +35,31 @@ const questions = [
         //Question 1
         questionText: "The condition in an if / else statement is enclosed within ____.",
         options: ["1. Curly Brackets", "2. Quotes", "3. Parentheses", "4. Square Brackets"],
-        correctAnswer: "2"
+        correctAnswer: 1
     },
     {
         //Question 2
         questionText: "The first index of an array is ____.",
         options: ["1. 5", "2. 1", "3. 0", "User chooses"],
-        correctAnswer: "3"
+        correctAnswer: 2
     },
     {
         //Question 3
         questionText: "String values must be enclosed using ____ when they are assigned to variables.",
         options: ["1. Parentheses", "2. Periods", "3. Curly Brackets", "4. Quotation Marks"],
-        correctAnswer: "3"
+        correctAnswer: 2
     },
     {
         //Question 4
         questionText: "How can you quickly debug by printing out values during development?",
         options: ["1. Terminal/bash", "2. Terminal/zsh", "3. System.print(TELL ME)", "4. Console.log"],
-        correctAnswer: "4"
+        correctAnswer: 3
     },
     {
         //Question 5
         questionText: "If you wanted to check if two variables are equal to each other in an if/else statement you would use ____.",
         options: ["1. ==", "2. 'equals'", "3. ===", "4. ="],
-        correctAnswer: "1"
+        correctAnswer: 0
     }
 ]
 
@@ -108,6 +108,7 @@ function startQuiz(){
 
     //Setting first question to display for the start of the quiz
     currentQuestionIndex = 0;
+    score = 0;
     showQuestion();
 
     //Countdown and then end quiz and display scores
@@ -139,17 +140,16 @@ function checkAnswer(eventObj){
     else{
         resultText.textContent = "Sorry, you've answered this question incorrectly.";
         setTimeout(hideResultText, 2000);
+        time = time - 10;
         if(time <= 10 && time > 0){
             display.textContent = "Hurry up!"
         }
     }
-    else{
-        if(time = 0){
+    if(time === 0){
         displayTime();
         stopQuiz();
     }
     }
-}
 
 document.querySelector("#quiz_options").addEventListener("click", checkAnswer);
 
@@ -169,19 +169,20 @@ const highScoreHyper = document.querySelector("highscores");
 highScoreHyper.addEventListener("click", showScores);
 
 function saveScore(event){
+    event.preventDefault();
+
     if(!inputEl.value){
         alert("Please enter your name so your high score will be saved before pressing submit");
         return false;
     }
-    else(
+    else{
         var savedHighScore = JSON.parse(localStorage.getItem("savedHighScore")) || [];
         var currentPlayer = highscoreInputName.value();
         var currentHighScore = {
             name: currentPlayer,
             score: score
         };
-
-    )
+    }
     updateLeaderboardScores(leaderBoard);
 
     hideCards();
@@ -194,6 +195,8 @@ function updateLeaderboardScores(leaderBoard){
     let leaderBoardArray = getLeaderBoard();
     leaderBoardArray.push(leaderBoard);
     localStorage.setItem("leaderBoardArray", JSON.stringify(leaderBoardArray));
+    console.log(leaderBoardArray);
+    leaderBoardArray.splice(10);
 }
 
 function renderScores(){

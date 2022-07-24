@@ -3,6 +3,7 @@
 <head>
     <!--Meta tag setup-->
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <title>Nick's Coding Quiz</title>
 
@@ -19,8 +20,8 @@
 <body>
     <header>
         <!--Accessing current highscore leaderboard-->
-        <a id=highscores>
-            Current Highscores
+        <a id=high-scores>
+            Current High Scores
         </a>
         <!--Time keeping-->
         <time>
@@ -31,51 +32,31 @@
     </header>
     <main>
         <!--Main title card-->    
-        <div id=quiz-start class = "card">
-            <h2 id=title>
-                Javascript Coding Quiz
-            </h2>
-            <p>
-                Answer as many coding questions correctly before the time runs out!
-                <br><br>
-                Incorrect answers will lose you points and 10 seconds of your remaining time.
-            </p>
-        </div>
-
-        <div id="quiz_questions" class ="card">
-            <div id="timer">Remaining Time: 
-                <div id="questions"></div>
-                <button id="option1" onclick="checkAnswer('1')">1.</button>
-                <button id="option2" onclick="checkAnswer('2')">2.</button>
-                <button id="option3" onclick="checkAnswer('3')">3.</button>
-                <button id="option4" onclick="checkAnswer('4')">4.</button>
-            </div>
-        </div>
-        <div id="correctness"></div>
-        
-        <div id="end_result">
-            <div id="final_score">
-                <input type="text" size = "36" placeholder="Enter your name for the high score leaderboard" name="name" id="name"/>
-                <button id="submit">Submit Your Score</button>
-            </div>
-            
-        </div>
-
-        <div id="high-score-card" class="card">
-            <div id="high-score-header">
-                <h2>User's name</h2>
-                <h2>Score</h2>
-            <div></div>
-            
-        </div>
-        <div id="high-score-name"></div>
-        <div id="highscore-score"></div>
-
-        <div id="endGameOptions">
-            <button id="mainMenu" onclick="goMenu()">Main Menu</button>
-            <button id="clearScores" onclick="clearScores()">Clear Highscore Leaderboard</button>
-        </div>
-    </main>
+        <section id="start-screen">
+            <h3>Javascript Coding Quiz</h3>
+            <button id="start-button">Start</button>
+        </section>
+        <section id="quiz-screen" hidden>
+            <span id="timer"></span>
+            <h3 id="question-text"></h3>
+            <ul id="answer-list"></ul>
+        </section>
+        <section id="end-screen" hidden></section>
+            <form id="score-submission-form">
+                <h3>Submit your score</h3>
+                <div>Score: <span id="score"></span></div>
+                <div>
+                    <label for="initials-input">Initials</label>
+                    <input type="text" name="initials" id="initials-input">
+                </div>
+                <button type="submit">Save score</button>
+            </form>
+        </section>
+        <section id="high-score-screen" hidden>
+            <h3>High Scores</h3>
+            <button id="clear-high-scores-button">Clear</button>
+            <ol id="high-scores-list"></ol>
+        </section>
 
     <!--Linking JS script-->
     <script src="./assets/script.js"></script>
