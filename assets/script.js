@@ -1,7 +1,98 @@
 //Variable storage
-const quiz_start = document.querySelector("#quiz-start");
-const quiz_questions = document.querySelector("quiz-questions");
-const high_score_card = document.querySelector("high-score-card")
+const startScreenEl = document.getElementById("start-screen");
+const startButtonEl = document.getElementById("start-button");
+
+const quizScreenEl = document.getElementById("quiz-screen");
+const timerEl = document.getElementById("timer");
+const questionTextEl = document.getElementById("question-text");
+const answerListEl = document.getElementById("answer-list");
+
+const endScreenEl = document.getElementById("end-screen");
+const scoreFormEl = document.getElementById("score-submission-form");
+const scoreSpanEl = document.getElementById("score");
+
+const highScoreScreenEl = document.getElementById("high-score-screen");
+const clearHighScoresButtonEl = document.getElementById("clear-high-scores-button");
+
+let questionIndex;
+let score;
+let timeRemaining;
+let timerHandle;
+
+const setTimeRemaining = (seconds) = {
+    if (!timerEl){
+        return;
+    }
+    timerEl.textContent =  ${timeRemaining};
+    if (timeRemaining === 0) {
+        endQuiz();
+    }
+};
+
+const startTimer = () => {
+    timerHandle = setInterval(
+        () => setTimeRemaining(timeRemaining - 1),
+        1000
+    );
+};
+
+const stopTimer = () => clearInterval(timerHandle);
+
+const displayQuestion = (question) => {
+    if (!questionTextEl || !answerListEl){
+        return;
+    }
+    questionTextEl.textContent = question.text;
+    answerListEl.innerHTML = "";
+    question.answers.forEach((answer, i) => {
+        const liEl = document.createElement("li");
+        const answerButtonEl = document.createElement("button");
+        answerButtonEl.textContent = answer;
+        answerListEl.addEventListener("click", () => {
+            if (i === question.correctIndex) {
+                score += 1;
+            } else {
+                setTimeRemaining(timeRemaining - 10);
+            }
+            advanceQuiz();
+            });
+            liEl.appendChild(answerButtonEl);
+            answerListEl.appendChild(liEl);
+        })''
+    };
+
+const advanceQuiz = () => {
+    if (questionIndex < questions.length) {
+        displayQuestion(questions[questionIndex]);
+        questionIndex++;
+    } else {
+        endQuiz();
+    }
+};
+
+const startQuiz = () => {
+    if (!startScreenEl || !quizScreenEl || !endScreenEl) {
+        return;
+    }
+    startScreenEl.hidden = true;
+    endScreenEl.hidden = true;
+    questionIndex = 0;
+    score = 0;
+    setTimeRemaining(90);
+    advanceQuiz();
+    startTimer();
+    quizScreenEl.hidden = false;
+};
+
+const endQuiz = () = => {
+    if (!startScreenEl || !quizScreenEl || !scoreSpanEl || !endScreenEl) {
+        return;
+    }
+    startScreenEl.hidden = true;
+    quizScreenEl.hidden = true;
+    scoreSpanEl.textContent = score;
+    endScreenEl.hidden = false;
+};
 
 //Hiding cards
 function hideCards(){
