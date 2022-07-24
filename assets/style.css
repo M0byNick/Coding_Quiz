@@ -1,0 +1,38 @@
+/* Body Styles */
+
+body {
+    font-family: Verdana;
+    background-color: white;
+    margin: 5px;
+}
+
+/* Header Styles */
+
+header {
+    display: flex;
+    justify-content: space-between;
+    background-color: aquamarine;
+    color: white;
+    padding: 3vh;
+}
+
+time {
+    min-width: 75px;
+}
+
+main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Button Styles */
+
+.button {
+    display: block;
+    color: white;
+    background-color: aqua;
+    padding: 2vh;
+    border-radius: 5px;
+    border: black;
+}

@@ -55,22 +55,22 @@ const mainMenuButtonEl = document.getElementsById("main-menu-button");
 
 let questionIndex;
 let score;
-let timeRemaining;
+let timeLeft;
 let timerHandle;
 
-const setTimeRemaining = (seconds) = {
+const settimeLeft = (seconds) = {
     if (!timerEl){
         return;
     }
-    timerEl.textContent =  ${timeRemaining};
-    if (timeRemaining === 0) {
+    timerEl.textContent = ${timeLeft};
+    if (timeLeft === 0) {
         endQuiz();
     }
 };
 
 const startTimer = () => {
     timerHandle = setInterval(
-        () => setTimeRemaining(timeRemaining - 1),
+        () => settimeLeft(timeLeft - 1),
         1000
     );
 };
@@ -91,7 +91,7 @@ const displayQuestion = (question) => {
             if (i === question.correctIndex) {
                 score += 1;
             } else {
-                setTimeRemaining(timeRemaining - 10);
+                settimeLeft(timeLeft - 10);
             }
             advanceQuiz();
             });
@@ -117,7 +117,7 @@ const startQuiz = () => {
     endScreenEl.hidden = true;
     questionIndex = 0;
     score = 0;
-    setTimeRemaining(90);
+    settimeLeft(90);
     advanceQuiz();
     startTimer();
     quizScreenEl.hidden = false;
