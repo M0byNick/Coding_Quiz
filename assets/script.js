@@ -165,6 +165,9 @@ const inputEl = document.querySelector("name");
 
 submitButton.addEventListener("click", saveScore);
 
+const highScoreHyper = document.querySelector("highscores");
+highScoreHyper.addEventListener("click", showScores);
+
 function saveScore(event){
     if(!inputEl.value){
         alert("Please enter your name so your high score will be saved before pressing submit");
@@ -205,6 +208,17 @@ function renderScores(){
     }
 }
 
+function showScores(){
+    hideCards();high_score_card.removeAttribute("hidden");
+
+    clearInterval(timerInterval);
+
+    time = undefined;
+    displayTime();
+
+    renderScores();
+}
+
 function getLeaderBoard(){
     let storedLeaderBoard = localStorage.getItem("leaderBoardArray");
     if(storedLeaderBoard !== null) {
@@ -226,5 +240,21 @@ function sortLeaderboard(){
         return score2.score - score1.score;
     });
     return leaderBoardArray;
+}
+
+const clearHighscoresButton = document.querySelector("#clearScores");
+clearHighscoresButton.addEventListener("click", clearHighScores);
+
+function clearHighScores(){
+    localStorage.clear();
+    renderScores();
+}
+
+const mainMenuButton = document.querySelector("mainMenu");
+mainMenuButton.addEventListener("click", returnMainMenu);
+
+function returnMainMenu(){
+    hideCards();
+    startQuiz.removeAttribute("hidden");
 }
 
