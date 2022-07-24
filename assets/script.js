@@ -110,6 +110,7 @@ function startQuiz(){
     currentQuestionIndex = 0;
     showQuestion();
 
+    //Countdown and then end quiz and display scores
     timerInterval = setInterval(function(){
         timeLeft--;
         quizTimer.textContent = "Remaining Time: " + timeLeft;
@@ -133,6 +134,7 @@ function checkAnswer(eventObj){
     if(optionIsCorrect(optionButton)){
         resultText.textContent = "Nice. You got this question correct!";
         setTimeout(hideResultText, 2000);
+        score++
     }
     else{
         resultText.textContent = "Sorry, you've answered this question incorrectly.";
@@ -160,3 +162,69 @@ function stopQuiz(){
 
 const submitButton = document.querySelector("submit");
 const inputEl = document.querySelector("name");
+
+submitButton.addEventListener("click", saveScore);
+
+function saveScore(event){
+    if(!inputEl.value){
+        alert("Please enter your name so your high score will be saved before pressing submit");
+        return false;
+    }
+    else(
+        var savedHighScore = JSON.parse(localStorage.getItem("savedHighScore")) || [];
+        var currentPlayer = highscoreInputName.value();
+        var currentHighScore = {
+            name: currentPlayer,
+            score: score
+        };
+
+    )
+    updateLeaderboardScores(leaderBoard);
+
+    hideCards();
+    high_score_card.removeAttribute("hidden");
+
+    renderScores();
+}
+
+function updateLeaderboardScores(leaderBoard){
+    let leaderBoardArray = getLeaderBoard();
+    leaderBoardArray.push(leaderBoard);
+    localStorage.setItem("leaderBoardArray", JSON.stringify(leaderBoardArray));
+}
+
+function renderScores(){
+    let sortedLeaderArray = sortLeaderboard();
+    const highScoreList = document.querySelector("#high-score-card")
+    highScoreList.innerHTML = "";
+    for (i=0; i < sortedLeaderArray.length; i++) {
+        let leaderBoardEntry = sortedLeaderArray[i];
+        let newListComponent = document.createElement("list");
+        newListComponent.textContent = leaderBoardEntry.name + " - " + leaderBoardEntry.score;
+        highScoreList.append(newListComponent);
+    }
+}
+
+function getLeaderBoard(){
+    let storedLeaderBoard = localStorage.getItem("leaderBoardArray");
+    if(storedLeaderBoard !== null) {
+        let leaderBoardArray = JSON.parse(storedLeaderBoard);
+        return leaderBoardArray;
+    }
+    else{
+        leaderBoardArray = [];
+    }
+    return leaderBoardArray;
+}
+
+function sortLeaderboard(){
+    let leaderBoardArray = getLeaderBoard();
+    if(!leaderBoardArray){
+        return;
+    }
+    leaderBoardArray.sort(function (score1, score2){
+        return score2.score - score1.score;
+    });
+    return leaderBoardArray;
+}
+
